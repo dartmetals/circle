@@ -1,0 +1,49 @@
+/* Remove all default margin and padding from page */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+/* styles/custom.css */
+
+.hero-section {
+  background: linear-gradient(135deg, #4ca1af, #fbc2eb);
+}
+
+/* GLASS CARD */
+.glass-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
+}
+
+/* BUTTONS */
+.btn-primary {
+  background: white;
+  color: black;
+  padding: 12px 24px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: scale(1.08);
+}
+
+.btn-secondary {
+  border: 1px solid white;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+}
+
+.btn-secondary:hover {
+  background: white;
+  color: black;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
