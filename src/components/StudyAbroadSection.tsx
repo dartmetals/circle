@@ -126,21 +126,28 @@ const ReviewsSection = () => (
       .reviews-root * { box-sizing: border-box; }
       .rcard:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
       .rcard { transition: transform 0.3s, box-shadow 0.3s; }
+      
+      /* Responsive grid for review cards */
+      @media (max-width: 860px) {
+        .reviews-grid {
+          grid-template-columns: 1fr !important;
+          gap: 30px !important;
+        }
+      }
     `}</style>
 
     <section
       className="reviews-root"
       style={{
         background: 'linear-gradient(180deg, #f5ede0 0%, #fdf8f2 100%)',
-        padding: '0 56px',
+        padding: '60px 56px',
         fontFamily: "'DM Sans', sans-serif",
         overflow: 'hidden',
         position: 'relative',
         minHeight: '100vh',
-        height: '100vh',
+        height: 'auto',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
       }}
     >
       {/* background decoration dots */}
@@ -167,11 +174,14 @@ const ReviewsSection = () => (
         </FadeUp>
 
         {/* ── Reviewers grid ── */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: 40,
-        }}>
+        <div 
+          className="reviews-grid"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 40,
+          }}
+        >
           {reviews.map((r, i) => (
             <FadeUp key={r.name} delay={0.12 + i * 0.15}>
               <div className="rcard" style={{
@@ -257,12 +267,6 @@ const ReviewsSection = () => (
           ))}
         </div>
       </div>
-
-      <style>{`
-        @media (max-width: 860px) {
-          .reviews-root .grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </section>
   </>
 );

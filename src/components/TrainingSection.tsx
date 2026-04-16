@@ -156,8 +156,6 @@ const SyllabusSection = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (sectionRef.current) {
-        // const rect = sectionRef.current.getBoundingClientRect();
-        // const windowHeight: number = window.innerHeight;
         const scrollY: number = window.scrollY;
         const heroHeight: number = window.innerHeight;
         
@@ -190,6 +188,15 @@ const SyllabusSection = () => {
         .syllabus-root * { box-sizing: border-box; }
         .syllabus-item { transition: transform 0.3s ease; }
         .syllabus-item:hover { transform: translateX(6px); }
+        
+        /* Responsive layout - content first on mobile/tablet, image first on desktop */
+        @media (max-width: 860px) {
+          .syllabus-grid {
+            display: flex !important;
+            flex-direction: column-reverse !important;
+            gap: 40px !important;
+          }
+        }
       `}</style>
  
       <section
@@ -201,6 +208,10 @@ const SyllabusSection = () => {
           fontFamily: "'DM Sans', sans-serif",
           overflow: 'hidden',
           position: 'relative',
+          minHeight: '100vh',
+          height: 'auto',
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
         {/* subtle background dots */}
@@ -209,10 +220,20 @@ const SyllabusSection = () => {
         <div style={{ position: 'absolute', top: 80, right: 60, width: 6, height: 6,
           borderRadius: '50%', background: 'rgba(200,160,120,0.3)', pointerEvents: 'none' }} />
  
-        <div style={{ maxWidth: 1140, margin: '0 auto', display: 'grid',
-          gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
+        <div 
+          className="syllabus-grid"
+          style={{
+            maxWidth: 1140, 
+            margin: '0 auto', 
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr', 
+            gap: 80, 
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
  
-          {/* ── LEFT: Illustration (Fixed) ── */}
+          {/* ── LEFT: Illustration (Fixed) - Shows second on mobile ── */}
           <div>
             <motion.div
               animate={{ y: [0, -12, 0] }}
@@ -222,7 +243,7 @@ const SyllabusSection = () => {
             </motion.div>
           </div>
  
-          {/* ── RIGHT: Content (Both title and items scroll together from bottom) ── */}
+          {/* ── RIGHT: Content (Both title and items scroll together from bottom) - Shows first on mobile ── */}
           <div
             style={{
               opacity: contentOpacity,
@@ -288,13 +309,6 @@ const SyllabusSection = () => {
             </div>
           </div>
         </div>
- 
-        {/* Responsive */}
-        <style>{`
-          @media (max-width: 860px) {
-            .syllabus-root .grid-inner { grid-template-columns: 1fr !important; }
-          }
-        `}</style>
       </section>
     </>
   );

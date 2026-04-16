@@ -222,6 +222,13 @@ const CoursesSection = () => (
     <style>{`
       @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap');
       .courses-root * { box-sizing: border-box; }
+      
+      /* Responsive grid for cards */
+      @media (max-width: 860px) {
+        .courses-grid {
+          grid-template-columns: 1fr !important;
+        }
+      }
     `}</style>
 
     <section
@@ -232,9 +239,13 @@ const CoursesSection = () => (
         fontFamily: "'DM Sans', sans-serif",
         overflow: 'hidden',
         position: 'relative',
+        minHeight: '100vh',
+        height: 'auto',
+        display: 'flex',
+        alignItems: 'center',
       }}
     >
-      <div style={{ maxWidth: 1140, margin: '0 auto' }}>
+      <div style={{ maxWidth: 1140, margin: '0 auto', width: '100%' }}>
 
         {/* ── Header row ── */}
         <div style={{
@@ -274,24 +285,19 @@ const CoursesSection = () => (
         </div>
 
         {/* ── Cards grid ── */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: 16,
-        }}>
+        <div 
+          className="courses-grid"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 16,
+          }}
+        >
           {courses.map((c, i) => (
             <CourseCard key={c.tag} {...c} delay={0.1 + i * 0.15} />
           ))}
         </div>
       </div>
-
-      <style>{`
-        @media (max-width: 860px) {
-          .courses-root section > div > div:last-child {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
     </section>
   </>
 );

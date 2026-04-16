@@ -8,11 +8,11 @@ import StudyAbroadSection from "./components/StudyAbroadSection";
 import About from "./components/Aboutsection";
 import CTASection from "./components/ContactSection";
 import SuccessStories from "./components/SuccessStories";
-import FooterSection from "./components/FooterSection";
 import SyllabusSection from "./components/TrainingSection";
 import CoursesSection from "./components/CourseSection";
 import ReviewsSection from "./components/StudyAbroadSection";
-import ContactAndFooter from "./components/Aboutsection";
+import ContactSection from "./components/Aboutsection";
+import FooterSection from "./components/FooterSection";
 
 // Define types for section objects
 interface Section {
@@ -33,6 +33,7 @@ const HomePage = () => {
     { id: 2, component: "internship", color: "#1a535c" },
     { id: 3, component: "abroad", color: "#ffe66d" },
     { id: 4, component: "about", color: "#ff6b6b" },
+    // { id: 4, component: "footer", color: "#ff6b6b" },
   ];
 
   // Measure section heights after they render
@@ -102,16 +103,7 @@ const HomePage = () => {
   };
 
   // RENDER SECTIONS WITH PROGRESS
-  const renderSectionContent = (sec: Section, index: number) => {
-    // Calculate total height of all previous sections
-    let totalPreviousHeight = 0;
-    for (let i = 0; i < index; i++) {
-      totalPreviousHeight += sectionHeights[i] || window.innerHeight;
-    }
-    
-    // const adjustedScrollY = Math.max(0, scrollY - window.innerHeight);
-    // const progress = (adjustedScrollY - totalPreviousHeight) / (sectionHeights[index] || window.innerHeight);
-
+  const renderSectionContent = (sec: Section, _index: number) => {
     switch (sec.component) {
       case "training":
         return <SyllabusSection />;
@@ -123,7 +115,10 @@ const HomePage = () => {
         return <ReviewsSection />;
 
       case "about":
-        return <ContactAndFooter/>;
+        return <ContactSection />;
+
+        // case "footer":
+        // return <FooterSection />;
 
       default:
         return null;
@@ -195,6 +190,7 @@ const HomePage = () => {
           </div>
         ))}
       </div>
+      {/* <FooterSection/> */}
     </>
   );
 };
@@ -230,15 +226,15 @@ const StoriesPage = () => (
   </>
 );
 
-// const TrainingPage = () => (
-//   <>
-//     <Header />
-//     <div className="pt-20">
-//       <SyllabusSection/>
-//     </div>
-//     <FooterSection />
-//   </>
-// );
+const TrainingPage = () => (
+  <>
+    <Header />
+    <div className="pt-20">
+      <SyllabusSection />
+    </div>
+    <FooterSection />
+  </>
+);
 
 const InternshipPage = () => {
   return (
@@ -270,7 +266,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/stories" element={<StoriesPage />} />
-        <Route path="/training" element={<SyllabusSection />} />
+        <Route path="/training" element={<TrainingPage />} />
         <Route path="/internship" element={<InternshipPage />} />
         <Route path="/study-abroad" element={<StudyAbroadPage />} />
       </Routes>

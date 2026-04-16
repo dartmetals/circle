@@ -3,6 +3,7 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
 /* styles/custom.css */
 
 .hero-section {
@@ -46,4 +47,49 @@ html, body {
 /* Smooth scroll */
 html {
   scroll-behavior: smooth;
+}
+
+/* Remove all margins and paddings that could cause gaps */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: #111;
+}
+
+/* Ensure footer stays at bottom with no gap */
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Remove any extra spacing from the last element */
+footer {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Ensure no gap after the last child */
+body > *:last-child,
+#root > *:last-child,
+div:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Specifically target the ContactAndFooter wrapper to remove any bottom gap */
+.contact-root {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.footer-root {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }

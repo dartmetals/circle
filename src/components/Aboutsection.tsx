@@ -199,16 +199,32 @@ const ContactSection = () => {
           80%{transform:translateX(5px)}
         }
         .shake { animation: contactShake 0.4s ease; }
+        
+        /* Responsive layout - content first on mobile, image on right on desktop */
+        @media (max-width: 860px) {
+          .contact-grid {
+            display: flex !important;
+            flex-direction: column-reverse !important;
+            gap: 40px !important;
+          }
+          .contact-root {
+            padding: 60px 24px !important;
+          }
+        }
       `}</style>
 
       <section
         className="contact-root"
         style={{
           background: 'linear-gradient(150deg, #1a7272 0%, #258f8f 38%, #c0a882 78%, #d8c09a 100%)',
-          padding: '90px 56px 80px',
+          padding: '90px 56px',
           fontFamily: "'DM Sans', sans-serif",
           overflow: 'hidden',
           position: 'relative',
+          minHeight: '100vh',
+          height: 'auto',
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
         {/* decorative dots */}
@@ -235,65 +251,77 @@ const ContactSection = () => {
           </svg>
         </div>
 
-        <div style={{ maxWidth: 1140, margin: '0 auto', display: 'grid',
-          gridTemplateColumns: '1fr auto', gap: 60, alignItems: 'center' }}>
+        <div 
+          className="contact-grid"
+          style={{
+            maxWidth: 1140, 
+            margin: '0 auto', 
+            display: 'grid',
+            gridTemplateColumns: '1fr auto', 
+            gap: 60, 
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
 
-          {/* ── LEFT ── */}
-          <FadeUp>
-            <h2 style={{
-              fontFamily: "'DM Serif Display', Georgia, serif",
-              fontSize: 'clamp(28px, 3.8vw, 50px)',
-              fontWeight: 400,
-              color: '#fff',
-              lineHeight: 1.15,
-              marginBottom: 18,
-            }}>
-              Still have questions?
-            </h2>
-            <p style={{
-              fontSize: 14,
-              color: 'rgba(255,255,255,0.7)',
-              lineHeight: 1.75,
-              maxWidth: 360,
-              marginBottom: 34,
-            }}>
-              Leave a request and we will contact you to help you choose the best training format.
-            </p>
+          {/* ── LEFT (Content) - Shows first on mobile ── */}
+          <div>
+            <FadeUp>
+              <h2 style={{
+                fontFamily: "'DM Serif Display', Georgia, serif",
+                fontSize: 'clamp(28px, 3.8vw, 50px)',
+                fontWeight: 400,
+                color: '#fff',
+                lineHeight: 1.15,
+                marginBottom: 18,
+              }}>
+                Still have questions?
+              </h2>
+              <p style={{
+                fontSize: 14,
+                color: 'rgba(255,255,255,0.7)',
+                lineHeight: 1.75,
+                maxWidth: 360,
+                marginBottom: 34,
+              }}>
+                Leave a request and we will contact you to help you choose the best training format.
+              </p>
 
-            {/* form */}
-            <div
-              className={shake ? 'shake' : ''}
-              style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap', maxWidth: 440 }}
-            >
-              <input
-                type="email"
-                className="email-input-contact"
-                placeholder="Your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
-              />
-              <button className="btn-submit-contact" onClick={handleSubmit}>
-                SUBMIT
-              </button>
-            </div>
+              {/* form */}
+              <div
+                className={shake ? 'shake' : ''}
+                style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap', maxWidth: 440 }}
+              >
+                <input
+                  type="email"
+                  className="email-input-contact"
+                  placeholder="Your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+                />
+                <button className="btn-submit-contact" onClick={handleSubmit}>
+                  SUBMIT
+                </button>
+              </div>
 
-            <AnimatePresence>
-              {submitted && (
-                <motion.p
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.4 }}
-                  style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', marginTop: 14 }}
-                >
-                  ✓ Thanks! We'll be in touch soon.
-                </motion.p>
-              )}
-            </AnimatePresence>
-          </FadeUp>
+              <AnimatePresence>
+                {submitted && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                    style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', marginTop: 14 }}
+                  >
+                    ✓ Thanks! We'll be in touch soon.
+                  </motion.p>
+                )}
+              </AnimatePresence>
+            </FadeUp>
+          </div>
 
-          {/* ── RIGHT – phone mockup ── */}
+          {/* ── RIGHT – phone mockup (Shows below content on mobile) ── */}
           <FadeUp delay={0.2} x={40}>
             <motion.div
               animate={{ y: [0, -10, 0] }}
@@ -489,3 +517,6 @@ const ContactAndFooter = () => (
 
 export default ContactAndFooter;
 export { ContactSection, Footer };
+
+
+
