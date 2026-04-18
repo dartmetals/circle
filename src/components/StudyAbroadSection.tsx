@@ -12,19 +12,14 @@ const FadeUp = ({ children, delay = 0, x = 0, style = {} }: FadeUpProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-60px' });
   return (
-    <motion.div
-      ref={ref}
-      style={style}
+    <motion.div ref={ref} style={style}
       initial={{ opacity: 0, y: 32, x }}
       animate={inView ? { opacity: 1, y: 0, x: 0 } : {}}
       transition={{ duration: 0.72, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
-    >
-      {children}
-    </motion.div>
+    >{children}</motion.div>
   );
 };
 
-/* ── Reviewer Avatars – SVG illustrated ─────────────────── */
 const AnnaAvatar = () => (
   <svg viewBox="0 0 80 80" width="80" height="80" fill="none">
     <circle cx="40" cy="40" r="40" fill="rgba(240,180,160,0.4)" />
@@ -71,14 +66,7 @@ const NadiyaAvatar = () => (
   </svg>
 );
 
-/* ── Decorative floating dots ───────────────────────────── */
-interface DotsProps {
-  top?: number;
-  left?: number;
-  right?: number;
-  bottom?: number;
-}
-
+interface DotsProps { top?: number; left?: number; right?: number; bottom?: number; }
 const Dots = ({ top, left, right, bottom }: DotsProps) => (
   <div style={{ position: 'absolute', top, left, right, bottom, pointerEvents: 'none' }}>
     <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -91,32 +79,12 @@ const Dots = ({ top, left, right, bottom }: DotsProps) => (
   </div>
 );
 
-interface Review {
-  name: string;
-  text: string;
-  Avatar: React.ComponentType;
-  accentColor: string;
-}
+interface Review { name: string; text: string; Avatar: React.ComponentType; accentColor: string; }
 
 const reviews: Review[] = [
-  {
-    name: 'Anna Tyuneva',
-    text: 'The course is great! Teachers talks very interesting and accessible. Thank you very much!',
-    Avatar: AnnaAvatar,
-    accentColor: 'rgba(240,180,160,0.55)',
-  },
-  {
-    name: 'Mykola Dunayev',
-    text: 'The course is clear enough. Well explained a lot of practice. I recommend to everyone!',
-    Avatar: MykolaAvatar,
-    accentColor: 'rgba(180,200,230,0.55)',
-  },
-  {
-    name: 'Naditya Kozarchuk',
-    text: 'The training was in one breath. Very accessible courses, everything is very clear and good.',
-    Avatar: NadiyaAvatar,
-    accentColor: 'rgba(200,180,220,0.45)',
-  },
+  { name: 'Anna Tyuneva',    text: 'The course is great! Teachers talks very interesting and accessible. Thank you very much!',          Avatar: AnnaAvatar,   accentColor: 'rgba(240,180,160,0.55)' },
+  { name: 'Mykola Dunayev',  text: 'The course is clear enough. Well explained a lot of practice. I recommend to everyone!',             Avatar: MykolaAvatar,  accentColor: 'rgba(180,200,230,0.55)' },
+  { name: 'Naditya Kozarchuk', text: 'The training was in one breath. Very accessible courses, everything is very clear and good.',      Avatar: NadiyaAvatar, accentColor: 'rgba(200,180,220,0.45)' },
 ];
 
 const ReviewsSection = () => (
@@ -126,142 +94,71 @@ const ReviewsSection = () => (
       .reviews-root * { box-sizing: border-box; }
       .rcard:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
       .rcard { transition: transform 0.3s, box-shadow 0.3s; }
-      
-      /* Responsive grid for review cards */
+
+      /* ✅ Mobile/tablet: full natural height */
       @media (max-width: 860px) {
-        .reviews-grid {
-          grid-template-columns: 1fr !important;
-          gap: 30px !important;
+        .reviews-section-el {
+          height: auto !important;
+          min-height: 100vh !important;
+          overflow: visible !important;
+          padding: 60px 24px !important;
+          align-items: flex-start !important;
         }
+        .reviews-grid { grid-template-columns: 1fr !important; gap: 30px !important; }
       }
     `}</style>
 
     <section
-      className="reviews-root"
+      className="reviews-root reviews-section-el"
       style={{
         background: 'linear-gradient(180deg, #f5ede0 0%, #fdf8f2 100%)',
         padding: '60px 56px',
         fontFamily: "'DM Sans', sans-serif",
-        overflow: 'hidden',
+        overflow: 'hidden',          /* ✅ clip to exact viewport on desktop */
         position: 'relative',
-        minHeight: '100vh',
-        height: 'auto',
+        /* ✅ CHANGED: height: 100vh — exact one screen on every laptop/desktop */
+        height: '100vh',
+        boxSizing: 'border-box',
         display: 'flex',
         alignItems: 'center',
       }}
     >
-      {/* background decoration dots */}
-      <Dots top={40} left={40} />
-      <Dots top={80} right={60} />
+      <Dots top={40}  left={40} />
+      <Dots top={80}  right={60} />
       <Dots bottom={60} left={160} />
       <Dots bottom={40} right={80} />
 
       <div style={{ maxWidth: 1140, margin: '0 auto', width: '100%' }}>
-
-        {/* ── Title ── */}
         <FadeUp>
           <h2 style={{
             fontFamily: "'DM Serif Display', Georgia, serif",
             fontSize: 'clamp(28px, 3.2vw, 42px)',
-            fontWeight: 400,
-            color: '#1a3535',
-            textAlign: 'center',
-            marginBottom: 60,
-            lineHeight: 1.2,
-          }}>
-            Students reviews
-          </h2>
+            fontWeight: 400, color: '#1a3535',
+            textAlign: 'center', marginBottom: 60, lineHeight: 1.2,
+          }}>Students reviews</h2>
         </FadeUp>
 
-        {/* ── Reviewers grid ── */}
-        <div 
-          className="reviews-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 40,
-          }}
-        >
+        <div className="reviews-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 40 }}>
           {reviews.map((r, i) => (
             <FadeUp key={r.name} delay={0.12 + i * 0.15}>
               <div className="rcard" style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textAlign: 'center',
-                padding: '20px 16px 28px',
-                borderRadius: 16,
+                display: 'flex', flexDirection: 'column', alignItems: 'center',
+                textAlign: 'center', padding: '20px 16px 28px', borderRadius: 16,
               }}>
-                {/* Avatar with accent ring */}
                 <div style={{ position: 'relative', marginBottom: 16 }}>
-                  {/* outer accent circle */}
                   <motion.div
                     animate={{ rotate: 360 }}
                     transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
-                    style={{
-                      position: 'absolute',
-                      inset: -6,
-                      borderRadius: '50%',
-                      border: `2px dashed ${r.accentColor}`,
-                    }}
+                    style={{ position: 'absolute', inset: -6, borderRadius: '50%', border: `2px dashed ${r.accentColor}` }}
                   />
-                  {/* small dot on ring */}
-                  <div style={{
-                    position: 'absolute',
-                    top: -10,
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    width: 8,
-                    height: 8,
-                    borderRadius: '50%',
-                    border: '1.5px solid rgba(42,152,136,0.4)',
-                    background: '#f5ede0',
-                  }} />
-                  {/* avatar */}
-                  <div style={{
-                    width: 80,
-                    height: 80,
-                    borderRadius: '50%',
-                    overflow: 'hidden',
-                    position: 'relative',
-                    zIndex: 1,
-                  }}>
+                  <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', width: 8, height: 8, borderRadius: '50%', border: '1.5px solid rgba(42,152,136,0.4)', background: '#f5ede0' }} />
+                  <div style={{ width: 80, height: 80, borderRadius: '50%', overflow: 'hidden', position: 'relative', zIndex: 1 }}>
                     <r.Avatar />
                   </div>
-                  {/* small accent dot */}
-                  <div style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    right: -4,
-                    width: 7,
-                    height: 7,
-                    borderRadius: '50%',
-                    background: r.accentColor,
-                    zIndex: 2,
-                  }} />
+                  <div style={{ position: 'absolute', bottom: 0, right: -4, width: 7, height: 7, borderRadius: '50%', background: r.accentColor, zIndex: 2 }} />
                 </div>
-
-                {/* Name */}
-                <h3 style={{
-                  fontSize: 15,
-                  fontWeight: 600,
-                  color: '#1a3535',
-                  marginBottom: 10,
-                  lineHeight: 1.3,
-                }}>
-                  {r.name}
-                </h3>
-
-                {/* Review text */}
-                <p style={{
-                  fontSize: 13,
-                  color: '#7a9090',
-                  lineHeight: 1.72,
-                  maxWidth: 260,
-                  margin: 0,
-                }}>
-                  {r.text}
-                </p>
+                <h3 style={{ fontSize: 15, fontWeight: 600, color: '#1a3535', marginBottom: 10, lineHeight: 1.3 }}>{r.name}</h3>
+                <p style={{ fontSize: 13, color: '#7a9090', lineHeight: 1.72, maxWidth: 260, margin: 0 }}>{r.text}</p>
               </div>
             </FadeUp>
           ))}

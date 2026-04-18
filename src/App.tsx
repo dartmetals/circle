@@ -33,7 +33,6 @@ const HomePage = () => {
     { id: 2, component: "internship", color: "#1a535c" },
     { id: 3, component: "abroad", color: "#ffe66d" },
     { id: 4, component: "about", color: "#ff6b6b" },
-    // { id: 4, component: "footer", color: "#ff6b6b" },
   ];
 
   // Measure section heights after they render
@@ -116,9 +115,6 @@ const HomePage = () => {
 
       case "about":
         return <ContactSection />;
-
-        // case "footer":
-        // return <FooterSection />;
 
       default:
         return null;

@@ -253,7 +253,29 @@ const HeroSection = () => {
           .hero-left      { text-align: center; }
           .hero-sub       { max-width: 100% !important; }
           .brands-row     { justify-content: center !important; }
-          .stats-bar      { border-radius: 18px !important; margin: 0 16px !important; width: auto !important; }
+          .stats-bar      { 
+            border-radius: 18px !important; 
+            margin: 0 16px 24px 16px !important; 
+            width: auto !important; 
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 24px !important;
+            padding: 24px 32px !important;
+            text-align: center !important;
+          }
+          
+          .stats-bar > div {
+            border-right: none !important;
+            border-bottom: 1px solid rgba(165,125,90,0.2);
+            padding: 0 0 20px 0 !important;
+            margin-bottom: 4px;
+          }
+          
+          .stats-bar > div:last-child {
+            border-bottom: none !important;
+            padding-bottom: 0 !important;
+            margin-bottom: 0;
+          }
         }
       `}</style>
  
@@ -417,7 +439,7 @@ const HeroSection = () => {
  
         {/* ── STATS BAR - Inside hero section at bottom ── */}
         <div
-          className="fade-up"
+          className="fade-up stats-bar"
           style={{
             background: 'rgba(249,241,228,0.93)',
             backdropFilter: 'blur(14px)',
